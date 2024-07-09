@@ -17,13 +17,7 @@ export class CustomedirectiveDirective {
 
   myfunction() {
     if (this.el) {
-      console.log('c d hit')
-      if (this.p1 != 0) {
-        this.el.nativeElement.style.color = 'red'
-      }
-      if (this.p2 != '') {
-        this.el.nativeElement.style.color = this.p2
-      }
+      console.log('p1-p2', this.p1, this.p2)
     }
   }
 }
