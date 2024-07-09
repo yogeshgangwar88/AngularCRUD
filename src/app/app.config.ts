@@ -15,7 +15,7 @@ import {
   provideAnimations,
 } from '@angular/platform-browser/animations'
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async'
-import {custominterceptorInterceptor} from './interceptor/custominterceptor.interceptor'
+import {custominterceptorInterceptor} from './services/interceptor/custominterceptor.interceptor'
 
 export const appConfig: ApplicationConfig = {
   providers: [
