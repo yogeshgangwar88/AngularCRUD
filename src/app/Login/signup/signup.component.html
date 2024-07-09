@@ -2,52 +2,98 @@
   <div class="row">
     <div class="col-md-6">
       <div class="card">
-        <div class="card-header"><h2>Sign up</h2> Reactive form </div>
+        <div class="card-header">
+          <h2>Sign up</h2>
+          Reactive form
+        </div>
         <div class="card-body">
-          <form [formGroup]="signupform"  (ngSubmit)="onSubmit()" >
+          <form [formGroup]="signupform" (ngSubmit)="onSubmit()">
             <div class="col-md-6">
-             <label for="name" >Name</label>
-             <input type="text" formControlName="fname" id="name" class="form-control" />
-             <!-- {{signupform.controls.fname.errors|json}} -->
-             <div *ngIf="signupform.touched && signupform.controls.fname.hasError ">
-              <p *ngIf="signupform.controls.fname.hasError('required'); else elsecontent" style="color: red;">required </p>
-              <ng-template #elsecontent >else </ng-template>
-              <p *ngIf="signupform.controls.fname.hasError('minlength')" style="color: red;">Min length must be 4</p>
-             </div>
-          </div>
-            <div class="col-md-6"> 
-              <label for="Number" >Number</label>
-              <input type="number" formControlName="Number" id="Number" class="form-control" />
+              <label for="name">Name</label>
+              <input
+                type="text"
+                formControlName="fname"
+                id="name"
+                class="form-control"
+              />
+              <!-- {{signupform.controls.fname.errors|json}} -->
+              <div
+                *ngIf="signupform.touched && signupform.controls.fname.hasError"
+              >
+                <p
+                  *ngIf="signupform.controls.fname.hasError('required')"
+                  style="color: red"
+                >
+                  required
+                </p>
+
+                <p
+                  *ngIf="signupform.controls.fname.hasError('minlength')"
+                  style="color: red"
+                >
+                  Min length must be 4
+                </p>
+                <p
+                  *ngIf="signupform.controls.fname.hasError('iserror')"
+                  style="color: red"
+                >
+                  abusive words exists
+                </p>
+              </div>
             </div>
-            <div class="col-md-6"> 
-              <label for="Email" >Email</label>
-              <input type="text" formControlName="Email" id="Email" class="form-control"  />
+            <div class="col-md-6">
+              <label for="Number">Number</label>
+              <input
+                type="number"
+                formControlName="Number"
+                id="Number"
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="Email">Email</label>
+              <input
+                type="text"
+                formControlName="Email"
+                id="Email"
+                class="form-control"
+              />
             </div>
             <div formGroupName="Address">
-            <div  class="col-md-6"> 
-              <label for="area" >area</label>
-              <input type="text" formControlName="Aria" id="area" class="form-control" />
+              <div class="col-md-6">
+                <label for="area">area</label>
+                <input
+                  type="text"
+                  formControlName="Aria"
+                  id="area"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-md-6">
+                <label for="pin">pin</label>
+                <input
+                  type="text"
+                  formControlName="Pin"
+                  id="pin"
+                  class="form-control"
+                />
+              </div>
             </div>
-            <div class="col-md-6"> 
-              <label for="pin" >pin</label>
-              <input type="text" formControlName="Pin" id="pin" class="form-control" />
-            </div>
-          </div>
-            <div class="col-md-6"> 
-              
-              <input type="submit" class="btn btn-success" /> 
+            <div class="col-md-6">
+              <input
+                type="submit"
+                class="btn btn-success"
+                style="margin: 5px"
+              />
             </div>
           </form>
         </div>
       </div>
     </div>
-    
-   
   </div>
 </div>
 
-
-  <!-- <p>
+<!-- <p>
     {{signupform.value|json}}|  {{signupform.status|json}}
     |  {{signupform.getError|json}}
   </p> -->
