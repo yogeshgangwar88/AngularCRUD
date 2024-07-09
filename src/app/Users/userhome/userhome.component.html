@@ -17,7 +17,7 @@
         <tr>
           <td>{{ i + 1 }}</td>
 
-          <td>{{ item.title }}</td>
+          <td appCustomedirective [p1]="0" [p2]="'green'">{{ item.title }}</td>
           <td>{{ item.body }}</td>
           <td>
             <img

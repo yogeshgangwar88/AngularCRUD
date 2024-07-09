@@ -24,13 +24,19 @@ import {ToastrService} from 'ngx-toastr'
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop'
 import {interval} from 'rxjs'
 import {RouterModule} from '@angular/router'
+import {CustomedirectiveDirective} from '../../Directive/customedirective.directive'
 //import {MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatDialogTitle} from '@angular/material/dialog';
 //declare var windows: any
 
 @Component({
   selector: 'app-userhome',
   standalone: true,
-  imports: [JsonPipe, ReactiveFormsModule, RouterModule],
+  imports: [
+    JsonPipe,
+    ReactiveFormsModule,
+    RouterModule,
+    CustomedirectiveDirective,
+  ],
   templateUrl: './userhome.component.html',
   styleUrl: './userhome.component.scss',
 })
