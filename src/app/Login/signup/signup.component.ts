@@ -2,13 +2,13 @@ import {CommonModule, JsonPipe} from '@angular/common'
 import {HttpClient} from '@angular/common/http'
 import {Component} from '@angular/core'
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   ValidationErrors,
   Validators,
 } from '@angular/forms'
-import {json} from 'stream/consumers'
 
 @Component({
   selector: 'app-signup',
@@ -22,7 +22,11 @@ export class SignupComponent {
     //
   }
   signupform = new FormGroup({
-    fname: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    fname: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      this.CustomValidatorfn,
+    ]),
     Email: new FormControl('', Validators.required),
     Number: new FormControl('', Validators.required),
     Password: new FormControl('', Validators.required),
@@ -50,5 +54,21 @@ export class SignupComponent {
         console.log('Observable emitted the complete notification')
       },
     })
+  }
+
+  CustomValidatorfn(control: AbstractControl) {
+    const words = ['bc', 'mc', 'kutta', 'kamina']
+    let list = (control.value as string).split(' ')
+    let iserror = false
+    for (let i of list) {
+      if (words.includes(i)) {
+        iserror = true
+      }
+    }
+    if (iserror) {
+      return {iserror: true}
+    } else {
+      return null
+    }
   }
 }
