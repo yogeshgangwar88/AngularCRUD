@@ -1,0 +1,132 @@
+<div class="card">
+  <div class="card-header">All Items</div>
+  <div class="card-body">
+    <table datatable class="table table-border table-hover">
+      <thead class="table-dark">
+        <tr>
+          <td>#</td>
+
+          <td>Title</td>
+          <td>Body</td>
+          <td>Photo</td>
+          <td>Action</td>
+        </tr>
+      </thead>
+      <tbody>
+        @for(item of getdata;track item;let i = $index) {
+        <tr>
+          <td>{{ i + 1 }}</td>
+
+          <td>{{ item.title }}</td>
+          <td>{{ item.body }}</td>
+          <td>
+            <img
+              src="https://picsum.photos/140/140?random={{ i }}"
+              alt="No Imgae "
+            />
+          </td>
+          <td style="width: 200px">
+            <div class="row">
+              <a
+                style="width: 50px; background-color: darkseagreen"
+                [routerLink]="['/home/itemdetails', item.id]"
+                class="btn btn-sm"
+              >
+                View</a
+              >
+              <input
+                style="width: 50px; margin-left: 10px"
+                type="button"
+                class="btn btn-primary btn-sm"
+                value="Edit"
+                (click)="editpopup(item.id, modalpopup)"
+              />
+              &nbsp;&nbsp;
+              <input
+                style="width: 50px; margin-left: 5px"
+                type="button"
+                class="btn btn-sm btn-danger"
+                value="Delete"
+                (click)="deteleitem(item.id)"
+              />
+            </div>
+          </td>
+        </tr>
+        } @empty {
+        <tr>
+          <td colspan="4">no data</td>
+        </tr>
+        }
+        <tr>
+          <td colspan="4">
+            <button
+              class="btn btn-primary"
+              (click)="openmodal('add', modalpopup)"
+            >
+              Add Item
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- -------------------Ng-bootstrap modal ---------------------------- -->
+<ng-template #modalpopup>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Item Detail</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-describedby="modal-title"
+      (click)="closePopup()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="itmform">
+      <div class="col-md-12">
+        <div class="col-md-6 mt4" style="margin-top: 10px">
+          <input type="hidden" formControlName="id" name="id" />
+          <input
+            type="text"
+            placeholder="title"
+            formControlName="title"
+            class="form-control"
+          />
+        </div>
+        <div class="col-md-6 mt4" style="margin-top: 10px">
+          <input
+            type="text"
+            placeholder="bady"
+            formControlName="body"
+            class="form-control"
+          />
+        </div>
+      </div>
+    </form>
+    <div class="col-md-6 mt4" style="margin-top: 10px">
+      <img [src]="imgurl" width="150px" height="200px;" />
+      <input
+        type="file"
+        accept="image/*"
+        placeholder="bady"
+        (change)="Imagechange($event)"
+        class="form-control"
+      />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="closePopup()"
+    >
+      Cancel
+    </button>
+
+    <button type="button" class="btn btn-primary" (click)="onsubmit(itmform)">
+      {{ btntxt }}
+    </button>
+  </div>
+</ng-template>

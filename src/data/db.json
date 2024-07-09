@@ -1,0 +1,59 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Juliet Oma",
+      "email": "julie@yahoo.com",
+      "number": "08100000000"
+    },
+    {
+      "id": "2",
+      "name": "James Williams",
+      "email": "jameswilly@gmail.com",
+      "number": "08111111111"
+    },
+    {
+      "id": "3",
+      "name": "Ahmed Ali",
+      "email": "ahmedali012@gmail.com",
+      "number": "09022222222"
+    },
+    {
+      "id": "4",
+      "name": "Grace Funsho",
+      "email": "gracefunsho@gmail.com",
+      "number": "09033333333"
+    },
+    {
+      "id": "078f",
+      "name": "yogesh Williams",
+      "email": "yogesh@gmail.com",
+      "number": "87464785"
+    },
+    {
+      "id": "d762",
+      "name": "yogesh final",
+      "email": "hgj@gmail.com",
+      "number": 7846554
+    },
+    {
+      "id": "3f14",
+      "name": "new",
+      "email": "hgjdd@gmail.com",
+      "number": 7346574
+    }
+  ],
+  "tutorials": [
+    {
+      "title": "test",
+      "description": "desct",
+      "published": true,
+      "id": "f0c2"
+    },
+    {
+      "id": "4b9b",
+      "title": "testdk",
+      "description": "flkhlf"
+    }
+  ]
+}

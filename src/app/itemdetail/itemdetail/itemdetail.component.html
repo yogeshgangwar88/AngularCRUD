@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-header">Details</div>
+  <div class="card-body">
+    <div class="card" style="width: 18rem">
+      <img
+        class="card-img-top"
+        src="https://picsum.photos/140/140?random={{ itemid }}"
+        alt="Card image cap"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ itemdetails.title }}</h5>
+        <p class="card-text">
+          {{ itemdetails.body }}
+        </p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Cras justo odio</li>
+        <li class="list-group-item">Dapibus ac facilisis in</li>
+        <li class="list-group-item">Vestibulum at eros</li>
+      </ul>
+      <div class="card-body">
+        <a
+          class="card-link"
+          routerLink="/home"
+          routerLinkActive="router-link-active"
+          >Back</a
+        >
+        <button
+          style="margin: 5px"
+          class="btn btn-danger"
+          (click)="openDialog('200', '200')"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

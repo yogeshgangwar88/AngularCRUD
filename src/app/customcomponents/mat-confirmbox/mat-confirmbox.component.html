@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Delete Item</h2>
+<mat-dialog-content> Are you sure ? </mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    mat-button
+    [mat-dialog-close]="clickedbtn"
+    #cancelbtn
+    (click)="userclicked(cancelbtn)"
+  >
+    No
+  </button>
+  <button
+    class="btn btn-danger"
+    mat-button
+    #okbtn
+    cdkFocusInitial
+    (click)="userclicked(okbtn)"
+  >
+    Ok
+  </button>
+</mat-dialog-actions>
