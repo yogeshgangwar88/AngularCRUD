@@ -1,21 +1,67 @@
-<h2 mat-dialog-title>Delete Item</h2>
-<mat-dialog-content> Are you sure ? </mat-dialog-content>
-<mat-dialog-actions>
-  <button
-    mat-button
-    [mat-dialog-close]="clickedbtn"
-    #cancelbtn
-    (click)="userclicked(cancelbtn)"
-  >
-    No
-  </button>
-  <button
-    class="btn btn-danger"
-    mat-button
-    #okbtn
-    cdkFocusInitial
-    (click)="userclicked(okbtn)"
-  >
-    Ok
-  </button>
-</mat-dialog-actions>
+<ng-template [ngIf]="data.type == 'confirm'">
+  <mat-dialog-content>
+    <div class="row">
+      <div class="card border-danger mb-3">
+        <div class="card-header">Confirm</div>
+        <div class="card-body text-danger">
+          <h5 class="card-title">
+            <h2 mat-dialog-title>{{ data.title }}</h2>
+          </h5>
+          <p class="card-text">
+            {{ data.content }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button
+      mat-button
+      [mat-dialog-close]="clickedbtn"
+      #cancelbtn
+      (click)="userclicked(cancelbtn)"
+    >
+      No
+    </button>
+    <button
+      id="confirmboxok"
+      class="btn btn-danger"
+      mat-button
+      #okbtn
+      cdkFocusInitial
+      (click)="userclicked(okbtn)"
+    >
+      Ok
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+<!-- ----------------------------------------- -->
+<ng-template [ngIf]="data.type == 'info'">
+  <mat-dialog-content>
+    <div class="row">
+      <div class="card border-info mb-3">
+        <div class="card-header bg-transparent border-info">Information</div>
+        <div class="card-body text-info">
+          <h5 class="card-info">
+            <h2 mat-dialog-title>{{ data.title }}</h2>
+          </h5>
+          <p class="card-text">
+            {{ data.content }}
+          </p>
+        </div>
+        <mat-dialog-actions>
+          <button
+            class="btn btn-primary"
+            mat-button
+            #okbtn
+            cdkFocusInitial
+            (click)="userclicked(okbtn)"
+          >
+            Ok
+          </button>
+        </mat-dialog-actions>
+      </div>
+    </div>
+  </mat-dialog-content>
+</ng-template>

@@ -23,24 +23,34 @@ import {MatConfirmboxComponent} from '../../customcomponents/mat-confirmbox/mat-
 export class ItemdetailComponent implements OnInit, AfterViewInit {
   readonly dialog = inject(MatDialog)
 
-  openDialog(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string
-  ): void {
+  openDialog(): void {
+    ////use _Infodata for info madal ////////
+    let _Infodata = {
+      type: 'info',
+      title: 'Information',
+      content: 'some content here',
+    }
+    ////use _confirmboxdata for _confirmboxdata madal ////////
+    let _confirmboxdata = {
+      type: 'confirm',
+      title: 'Are you Sure ?',
+      content: 'This file will be removed permanantly',
+    }
+
     var dial = this.dialog.open(MatConfirmboxComponent, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
+      width: '550px',
+      enterAnimationDuration: 200,
+      exitAnimationDuration: 200,
+      data: _confirmboxdata,
     })
     dial.afterClosed().subscribe((res) => {
-      if (res.btntext.toLowerCase() == 'ok') {
+      if (res.btnid == 'confirmboxok') {
         this.delete()
       }
     })
   }
 
   itemid: any
-  //@ViewChild('UserhomeComponent') Userhome!: UserhomeComponent
   constructor(
     private dataser: DataserviceService,
     private routes: ActivatedRoute,
