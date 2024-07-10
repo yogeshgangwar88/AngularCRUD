@@ -1,0 +1,85 @@
+<div class="card-header text-center" style="margin: 10px">
+  <h2>Edit Item Details</h2>
+</div>
+<form
+  [formGroup]="signupform"
+  (ngSubmit)="onSubmit(signupform.value)"
+  #dataform
+  tabindex="0"
+>
+  <div class="container">
+    <div class="row">
+      <div class="mb-3 row">
+        <label for="Title" class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            id="Title"
+            formControlName="title"
+            name="title"
+            #title
+          />
+        </div>
+        <div
+          *ngIf="
+            signupform.touched && signupform.controls.title.hasError('required')
+          "
+          class="text-danger"
+        >
+          This is required feild
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="body" class="col-sm-2 col-form-label">Body</label>
+        <div class="col-sm-10">
+          <textarea
+            type="text"
+            cols="3"
+            class="form-control"
+            id="Title"
+            formControlName="body"
+            name="body"
+            #body
+          ></textarea>
+        </div>
+        <div
+          *ngIf="
+            signupform.touched && signupform.controls.body.hasError('required')
+          "
+          class="text-danger"
+        >
+          This is required feild
+        </div>
+        <div
+          *ngIf="
+            signupform.touched && signupform.controls.body.hasError('minlength')
+          "
+          class="text-danger"
+        >
+          min length is 5
+        </div>
+      </div>
+    </div>
+    <div class="md-3 row"></div>
+    <div class="col-sm-12">
+      <button
+        type="button"
+        mat-dialog-close
+        style="margin: 5px; float: right; width: 50px"
+        class="btn btn-secondary btn-sm"
+        mat-button
+      >
+        Cancel
+      </button>
+      <button
+        style="margin: 5px; float: right; width: 50px"
+        type="submit"
+        class="btn btn-primary btn-sm"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</form>
+<div class="toasterdiv" style="min-height: 200px"></div>

@@ -10,6 +10,7 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog'
+import {MaterialformsComponent} from '../../materialforms/materialforms.component'
 
 @Component({
   selector: 'app-mat-confirmbox',
@@ -23,20 +24,25 @@ import {
     MatDialogTitle,
     MatDialogContent,
     CommonModule,
+    MaterialformsComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MatConfirmboxComponent {
-  clickedbtn: any
+  itemidx: any
   //constructor(private ref: MatDialogRef<MatConfirmboxComponent>) {}
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ref: MatDialogRef<MatConfirmboxComponent>
-  ) {}
-  userclicked(ele: MatButton) {
+  ) {
+    this.itemidx = data.itemid
+  }
+  userclicked(ele: any) {
+    console.log(ele)
     this.ref.close({
-      btnid: ele._elementRef.nativeElement.id,
-      btntext: ele._elementRef.nativeElement.innerText,
+      //  ele._elementRef.nativeElement.id,  (when mat button use)
+      btnid: ele.id,
+      btntext: ele.innerText,
     })
   }
 }
