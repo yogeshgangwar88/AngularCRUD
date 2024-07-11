@@ -1,4 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core'
+import {
+  AfterViewInit,
+  Component,
+  DoCheck,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core'
 import {
   FormControl,
   FormGroup,
@@ -23,8 +31,12 @@ export class MaterialformsComponent implements OnInit {
   constructor(
     private dataser: DataserviceService,
     private toast: ToastrService,
-    public dialogRef: MatDialogRef<MatConfirmboxComponent>
-  ) {}
+    public dialogRef: MatDialogRef<MatConfirmboxComponent>,
+    private matd: MatConfirmboxComponent
+  ) {
+    console.log(this.itemid)
+  }
+
   ngOnInit(): void {
     this.dataser.getitembyid(this.itemid).subscribe({
       next: (v) => {
@@ -49,11 +61,12 @@ export class MaterialformsComponent implements OnInit {
     }
     this.dataser.additem(obj).subscribe({
       next: (v) => {
-        // this.toast.toastrConfig.positionClass = 'mat-mdc-dialog-container'
-        // this.toast.success('item added successfully')
         this.dialogRef.close()
+        this.matd.openModal('success', 'Item Updated Successfully')
       },
-      error: (e) => {},
+      error: (e) => {
+        console.log(e)
+      },
       complete() {},
     })
   }

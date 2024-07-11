@@ -1,14 +1,5 @@
 import {HttpClient} from '@angular/common/http'
-import {
-  AfterViewInit,
-  Component,
-  DestroyRef,
-  ElementRef,
-  inject,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core'
+import {Component, DestroyRef, inject, OnInit} from '@angular/core'
 import {LoginserviceService} from '../../services/loginservice.service'
 import {JsonPipe} from '@angular/common'
 import {
@@ -22,11 +13,8 @@ import {DataserviceService} from '../../services/dataservice.service'
 import {Posts} from '../../Model/posts'
 import {ToastrService} from 'ngx-toastr'
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop'
-import {interval} from 'rxjs'
 import {RouterModule} from '@angular/router'
 import {CustomedirectiveDirective} from '../../Directive/customedirective.directive'
-//import {MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatDialogTitle} from '@angular/material/dialog';
-//declare var windows: any
 
 @Component({
   selector: 'app-userhome',
@@ -40,24 +28,20 @@ import {CustomedirectiveDirective} from '../../Directive/customedirective.direct
   templateUrl: './userhome.component.html',
   styleUrl: './userhome.component.scss',
 })
-export class UserhomeComponent implements OnInit, AfterViewInit {
-  // modalshow: string = 'modal fade'
-  // @ViewChild('exampleModal') modal?: ElementRef
+export class UserhomeComponent implements OnInit {
   btntxt = 'Save Item'
   editmode = false
   modelref: any = null
   imgurl = 'assets/usrimg.png'
+  getdata: Posts[] = []
   constructor(
-    private myservice: LoginserviceService,
-    private httpclnt: HttpClient,
     config: NgbModalConfig,
     private modalService: NgbModal,
     private dataservice: DataserviceService,
-    private toastr: ToastrService
+    private toastr: ToastrService //private matthin: MatConfirmboxComponent
   ) {
     config.backdrop = 'static'
     config.keyboard = true
-    //////////
   }
   destroyref = inject(DestroyRef)
   itmform = new FormGroup({
@@ -85,15 +69,10 @@ export class UserhomeComponent implements OnInit, AfterViewInit {
   }
   //modalpop: any
 
-  ngAfterViewInit(): void {
-    //
-    console.log('ngAfterViewInit')
-  }
   ngOnInit(): void {
     this.getalldata()
     //
   }
-  getdata: Posts[] = []
 
   getalldata() {
     this.dataservice

@@ -27,7 +27,10 @@ export class MattableComponent implements OnInit {
   displaycolumns: string[] = ['title', 'body', 'image', 'action']
   @ViewChild(MatPaginator) paginator!: MatPaginator
   readonly dialog = inject(MatDialog)
-  constructor(private dataservice: DataserviceService) {}
+  constructor(
+    private dataservice: DataserviceService,
+    private _matmodal: MatConfirmboxComponent
+  ) {}
   ngOnInit(): void {
     this.dataservice.Getdata().subscribe({
       next: (v) => {
@@ -42,34 +45,25 @@ export class MattableComponent implements OnInit {
     })
   }
 
-  openDialog(id: number, action: string): void {
-    ////use _confirmboxdata for _confirmboxdata madal ////////
-    let _formdata = {}
-    if (action == 'edit') _formdata = {type: 'Editform', itemid: id}
-    else
-      _formdata = {
-        type: 'confirm',
-        itemid: id,
-        content: 'This item will be deleted.',
-      }
-
-    var dial = this.dialog.open(MatConfirmboxComponent, {
-      width: action == 'edit' ? '550px' : '350px',
-      height: action == 'edit' ? '550px' : '280px',
-      enterAnimationDuration: 200,
-      exitAnimationDuration: 200,
-      data: _formdata,
-    })
-    dial.afterClosed().subscribe((res) => {
-      console.log(res)
-
-      if (res?.btnid == 'confirmboxok') {
-        this.dataservice.deleteitem(id).subscribe({
-          next: (v) => {
-            alert('Item deleted')
-          },
-        })
-      }
-    })
+  openDialogedit(id: number): void {
+    this._matmodal.data.itemid = id
+    this._matmodal.openModal('editform', '', id)
+  }
+  opendialogdelete(id: number) {
+    this._matmodal
+      .openModal('confirm', '', id)
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.dataservice.deleteitem(id).subscribe({
+            next: (v) => {
+              this._matmodal.openModal('success', 'Item deleted successfully')
+            },
+            error(err) {
+              console.log(err)
+            },
+          })
+        }
+      })
   }
 }
