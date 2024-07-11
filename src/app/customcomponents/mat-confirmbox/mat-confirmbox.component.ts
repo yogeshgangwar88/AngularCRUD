@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, Component, Inject} from '@angular/core'
+import {
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  Injectable,
+} from '@angular/core'
 import {MatButton, MatButtonModule} from '@angular/material/button'
 import {CommonModule} from '@angular/common'
 import {
@@ -25,24 +32,41 @@ import {MaterialformsComponent} from '../../materialforms/materialforms.componen
     MatDialogContent,
     CommonModule,
     MaterialformsComponent,
+    MatDialogActions,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+@Injectable({
+  providedIn: 'root',
+})
 export class MatConfirmboxComponent {
-  itemidx: any
-  //constructor(private ref: MatDialogRef<MatConfirmboxComponent>) {}
+  itemidx!: number
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private ref: MatDialogRef<MatConfirmboxComponent>
+    private ref: MatDialogRef<MatConfirmboxComponent>,
+    private dialog: MatDialog
   ) {
-    this.itemidx = data.itemid
+    // console.log(this.itemidx)
   }
-  userclicked(ele: any) {
-    console.log(ele)
-    this.ref.close({
-      //  ele._elementRef.nativeElement.id,  (when mat button use)
-      btnid: ele.id,
-      btntext: ele.innerText,
+
+  openModal(
+    _modType: string = 'confirm',
+    _modContent: string = 'Please Confirm ',
+    _itemid: number = 0
+  ) {
+    this.itemidx = _itemid
+    let _modaldata = {type: _modType, content: _modContent, itemid: _itemid}
+
+    console.log(_itemid)
+    var _d = this.dialog.open(MatConfirmboxComponent, {
+      width: '350px',
+      enterAnimationDuration: 200,
+      exitAnimationDuration: 200,
+      data: _modaldata,
     })
+
+    console.log(_d)
+    return _d
   }
 }

@@ -28,7 +28,7 @@
         <td mat-cell *matCellDef="let element">
           <div style="width: 200px">
             <button
-              (click)="openDialog(element.id, 'edit')"
+              (click)="openDialogedit(element.id)"
               mat-raised-button
               color="primary"
               style="width: 80px"
@@ -39,7 +39,7 @@
               mat-raised-button
               color="red"
               style="width: 80px; margin-left: 10px"
-              (click)="openDialog(element.id, 'delete')"
+              (click)="opendialogdelete(element.id)"
             >
               Delete
             </button>
