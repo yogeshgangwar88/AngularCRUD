@@ -9,6 +9,7 @@
 
           <td>Title</td>
           <td>Body</td>
+          <td>Price</td>
           <td>Photo</td>
           <td>Action</td>
         </tr>
@@ -18,21 +19,30 @@
         <tr>
           <td>{{ i + 1 }}</td>
 
-          <td appCustomedirective [p1]="0" [p2]="'green'">{{ item.title }}</td>
-          <td>{{ item.body }}</td>
+          <td appCustomedirective [p1]="0" [p2]="'green'">
+            {{ item.productName }}
+          </td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.price | currency : 'INR' : 'symbol' }}</td>
           <td>
-            <img
-              src="https://picsum.photos/140/140?random={{ i }}"
-              alt="No Imgae "
-            />
+            <ng-container *ngIf="item.imageName; else defaultimg">
+              <img
+                style="width: 140px; height: 140px"
+                src="http://localhost:5123/staticImages/{{ item.imageName }}"
+                alt="No Imgae " />
+            </ng-container>
+            <ng-template #defaultimg>
+              <img
+                src="https://picsum.photos/140/140?random={{ i }}"
+                alt="No Imgae " />
+            </ng-template>
           </td>
           <td style="width: 200px">
             <div class="row">
               <a
                 routerLink="/home/itemdetails/{{ item.id }}"
                 style="width: 50px; background-color: darkseagreen"
-                class="btn btn-sm"
-              >
+                class="btn btn-sm">
                 View</a
               >
               <input
@@ -40,30 +50,27 @@
                 type="button"
                 class="btn btn-primary btn-sm"
                 value="Edit"
-                (click)="editpopup(item.id, modalpopup)"
-              />
+                (click)="editpopup(item.id, modalpopup)" />
               &nbsp;&nbsp;
               <input
                 style="width: 50px; margin-left: 5px"
                 type="button"
                 class="btn btn-sm btn-danger"
                 value="Delete"
-                (click)="deteleitem(item.id)"
-              />
+                (click)="deteleitem(item.id)" />
             </div>
           </td>
         </tr>
         } @empty {
         <tr>
-          <td colspan="4">no data</td>
+          <td colspan="5">no data</td>
         </tr>
         }
         <tr>
-          <td colspan="4">
+          <td colspan="5">
             <button
               class="btn btn-primary"
-              (click)="openmodal('add', modalpopup)"
-            >
+              (click)="openmodal('add', modalpopup)">
               Add Item
             </button>
           </td>
@@ -81,8 +88,7 @@
       type="button"
       class="btn-close"
       aria-describedby="modal-title"
-      (click)="closePopup()"
-    ></button>
+      (click)="closePopup()"></button>
   </div>
   <div class="modal-body">
     <form [formGroup]="itmform">
@@ -92,17 +98,22 @@
           <input
             type="text"
             placeholder="title"
-            formControlName="title"
-            class="form-control"
-          />
+            formControlName="productName"
+            class="form-control" />
         </div>
         <div class="col-md-6 mt4" style="margin-top: 10px">
           <input
             type="text"
-            placeholder="bady"
-            formControlName="body"
-            class="form-control"
-          />
+            placeholder="description"
+            formControlName="description"
+            class="form-control" />
+        </div>
+        <div class="col-md-6 mt4" style="margin-top: 10px">
+          <input
+            type="number"
+            placeholder="price"
+            formControlName="price"
+            class="form-control" />
         </div>
       </div>
     </form>
@@ -111,22 +122,24 @@
       <input
         type="file"
         accept="image/*"
-        placeholder="bady"
+        placeholder="body"
         (change)="Imagechange($event)"
-        class="form-control"
-      />
+        class="form-control" />
     </div>
   </div>
   <div class="modal-footer">
     <button
       type="button"
       class="btn btn-outline-secondary"
-      (click)="closePopup()"
-    >
+      (click)="closePopup()">
       Cancel
     </button>
 
-    <button type="button" class="btn btn-primary" (click)="onsubmit(itmform)">
+    <button
+      type="button"
+      [disabled]="itmform.invalid"
+      class="btn btn-primary"
+      (click)="onsubmit(itmform)">
       {{ btntxt }}
     </button>
   </div>

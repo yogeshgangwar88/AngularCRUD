@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core'
-import {DataserviceService} from '../../services/dataservice.service'
-import {Posts} from '../../Model/posts'
-import {ActivatedRoute, Router, RouterModule, Routes} from '@angular/router'
-import {ToastrService} from 'ngx-toastr'
+import { Component, OnInit } from '@angular/core'
+import { DataserviceService } from '../../services/dataservice.service'
+import { ActivatedRoute, Router, RouterModule, Routes } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
+import { Product } from '../../Model/product'
 
 @Component({
   selector: 'app-itemdetail',
@@ -21,19 +21,19 @@ export class ItemdetailComponent implements OnInit {
   itemid: any
   constructor(
     private dataser: DataserviceService,
-    private routes: ActivatedRoute,
+    private ActivatedRoute: ActivatedRoute,
     private toastr: ToastrService,
-    private routesx: Router
+    private Router: Router
   ) {}
 
-  itemdetails!: Posts
+  itemdetails!: Product
   ngOnInit(): void {
     //get param value from url
-    this.itemid = this.routes.snapshot.paramMap.get('id')
+    this.itemid = this.ActivatedRoute.snapshot.paramMap.get('id')
     this.dataser.getitembyid(this.itemid).subscribe({
       next: (v) => {
         this.itemdetails = v
-        console.log(this.itemdetails)
+        //console.log(this.itemdetails)
       },
       error: (e) => {},
       complete: () => {},
@@ -47,7 +47,7 @@ export class ItemdetailComponent implements OnInit {
       },
       error: (e) => console.log(this.itemid),
       complete: () => {
-        this.routesx.navigate(['/home'])
+        this.Router.navigate(['/home'])
       },
     })
   }

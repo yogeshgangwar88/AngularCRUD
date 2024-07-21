@@ -1,13 +1,13 @@
-import {Component, inject, OnInit, ViewChild} from '@angular/core'
-import {MatTableDataSource, MatTableModule} from '@angular/material/table'
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator'
-import {MatSortModule} from '@angular/material/sort'
-import {Posts} from '../../Model/posts'
-import {DataserviceService} from '../../services/dataservice.service'
-import {MatCardModule} from '@angular/material/card'
-import {MatButtonModule} from '@angular/material/button'
-import {MatDialog} from '@angular/material/dialog'
-import {MatConfirmboxComponent} from '../../customcomponents/mat-confirmbox/mat-confirmbox.component'
+import { Component, inject, OnInit, ViewChild } from '@angular/core'
+import { MatTableDataSource, MatTableModule } from '@angular/material/table'
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
+import { MatSortModule } from '@angular/material/sort'
+import { DataserviceService } from '../../services/dataservice.service'
+import { MatCardModule } from '@angular/material/card'
+import { MatButtonModule } from '@angular/material/button'
+import { MatDialog } from '@angular/material/dialog'
+import { MatConfirmboxComponent } from '../../customcomponents/mat-confirmbox/mat-confirmbox.component'
+import { Product } from '../../Model/product'
 @Component({
   selector: 'app-mattable',
   standalone: true,
@@ -22,7 +22,7 @@ import {MatConfirmboxComponent} from '../../customcomponents/mat-confirmbox/mat-
   styleUrl: './mattable.component.scss',
 })
 export class MattableComponent implements OnInit {
-  Postlist!: Posts[]
+  Postlist!: Product[]
   datasource: any
   displaycolumns: string[] = ['title', 'body', 'image', 'action']
   @ViewChild(MatPaginator) paginator!: MatPaginator
@@ -35,7 +35,7 @@ export class MattableComponent implements OnInit {
     this.dataservice.Getdata().subscribe({
       next: (v) => {
         this.Postlist = v
-        this.datasource = new MatTableDataSource<Posts>(this.Postlist)
+        this.datasource = new MatTableDataSource<Product>(this.Postlist)
         this.datasource.paginator = this.paginator
       },
       error(err) {

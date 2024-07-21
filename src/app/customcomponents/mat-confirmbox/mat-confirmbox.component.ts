@@ -58,7 +58,7 @@ export class MatConfirmboxComponent {
     this.itemidx = _itemid
     let _modaldata = {type: _modType, content: _modContent, itemid: _itemid}
 
-    console.log(_itemid)
+    //console.log(_itemid)
     var _d = this.dialog.open(MatConfirmboxComponent, {
       width: '350px',
       enterAnimationDuration: 200,
@@ -66,7 +66,7 @@ export class MatConfirmboxComponent {
       data: _modaldata,
     })
 
-    console.log(_d)
+    //console.log(_d)
     return _d
   }
 }

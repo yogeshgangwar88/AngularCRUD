@@ -13,11 +13,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms'
-import {DataserviceService} from '../services/dataservice.service'
-import {CommonModule} from '@angular/common'
-import {ToastrService} from 'ngx-toastr'
-import {MatDialogClose, MatDialogRef} from '@angular/material/dialog'
-import {MatConfirmboxComponent} from '../customcomponents/mat-confirmbox/mat-confirmbox.component'
+import { DataserviceService } from '../services/dataservice.service'
+import { CommonModule } from '@angular/common'
+import { ToastrService } from 'ngx-toastr'
+import { MatDialogClose, MatDialogRef } from '@angular/material/dialog'
+import { MatConfirmboxComponent } from '../customcomponents/mat-confirmbox/mat-confirmbox.component'
 
 @Component({
   selector: 'app-materialforms',
@@ -28,6 +28,7 @@ import {MatConfirmboxComponent} from '../customcomponents/mat-confirmbox/mat-con
 })
 export class MaterialformsComponent implements OnInit {
   @Input('itemid') itemid!: number
+  postdata: any
   constructor(
     private dataser: DataserviceService,
     private toast: ToastrService,
@@ -40,8 +41,8 @@ export class MaterialformsComponent implements OnInit {
   ngOnInit(): void {
     this.dataser.getitembyid(this.itemid).subscribe({
       next: (v) => {
-        this.signupform.controls.body.setValue(v.body)
-        this.signupform.controls.title.setValue(v.title)
+        this.signupform.controls.body.setValue(v.description)
+        this.signupform.controls.title.setValue(v.productName)
       },
       error(err) {},
       complete() {},
@@ -53,13 +54,12 @@ export class MaterialformsComponent implements OnInit {
     userid: new FormControl(2),
   })
   onSubmit(fvalue: any) {
-    let obj = {
-      userId: fvalue.userid,
-      id: this.itemid,
-      title: fvalue.title,
-      body: fvalue.body,
-    }
-    this.dataser.additem(obj).subscribe({
+    this.postdata.id = fvalue.userid
+    this.postdata.productName = this.itemid
+    this.postdata.description = fvalue.title
+    this.postdata.price = fvalue.body
+
+    this.dataser.additem(this.postdata).subscribe({
       next: (v) => {
         this.dialogRef.close()
         this.matd.openModal('success', 'Item Updated Successfully')

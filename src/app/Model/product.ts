@@ -4,4 +4,5 @@ export interface Product {
   description: string
   price: number
   wishlists: any[]
+  imageName: string
 }
