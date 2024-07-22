@@ -1,13 +1,11 @@
 import {
-  AfterContentInit,
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   Inject,
   Injectable,
 } from '@angular/core'
-import {MatButton, MatButtonModule} from '@angular/material/button'
-import {CommonModule} from '@angular/common'
+import { MatButton, MatButtonModule } from '@angular/material/button'
+import { CommonModule } from '@angular/common'
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -17,7 +15,7 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog'
-import {MaterialformsComponent} from '../../materialforms/materialforms.component'
+import { MaterialformsComponent } from '../../materialforms/materialforms.component'
 
 @Component({
   selector: 'app-mat-confirmbox',
@@ -56,9 +54,9 @@ export class MatConfirmboxComponent {
     _itemid: number = 0
   ) {
     this.itemidx = _itemid
-    let _modaldata = {type: _modType, content: _modContent, itemid: _itemid}
+    let _modaldata = { type: _modType, content: _modContent, itemid: _itemid }
 
-    console.log(_itemid)
+    //console.log(_itemid)
     var _d = this.dialog.open(MatConfirmboxComponent, {
       width: '350px',
       enterAnimationDuration: 200,
@@ -66,7 +64,7 @@ export class MatConfirmboxComponent {
       data: _modaldata,
     })
 
-    console.log(_d)
+    //console.log(_d)
     return _d
   }
 }

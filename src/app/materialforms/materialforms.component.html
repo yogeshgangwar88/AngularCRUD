@@ -5,8 +5,7 @@
   [formGroup]="signupform"
   (ngSubmit)="onSubmit(signupform.value)"
   #dataform
-  tabindex="0"
->
+  tabindex="0">
   <div class="container">
     <div class="row">
       <div class="mb-3 row">
@@ -18,15 +17,13 @@
             id="Title"
             formControlName="title"
             name="title"
-            #title
-          />
+            #title />
         </div>
         <div
           *ngIf="
             signupform.touched && signupform.controls.title.hasError('required')
           "
-          class="text-danger"
-        >
+          class="text-danger">
           This is required feild
         </div>
       </div>
@@ -40,43 +37,73 @@
             id="Title"
             formControlName="body"
             name="body"
-            #body
-          ></textarea>
+            #body></textarea>
         </div>
         <div
           *ngIf="
             signupform.touched && signupform.controls.body.hasError('required')
           "
-          class="text-danger"
-        >
+          class="text-danger">
           This is required feild
         </div>
         <div
           *ngIf="
             signupform.touched && signupform.controls.body.hasError('minlength')
           "
-          class="text-danger"
-        >
+          class="text-danger">
           min length is 5
         </div>
       </div>
     </div>
-    <div class="md-3 row"></div>
+    <div class="mb-3 row">
+      <label for="Price" class="col-sm-2 col-form-label">Price</label>
+      <div class="col-sm-10">
+        <input
+          type="number"
+          class="form-control"
+          id="Price"
+          formControlName="Price"
+          name="Price"
+          #Price />
+      </div>
+      <div
+        *ngIf="
+          signupform.touched && signupform.controls.Price.hasError('required')
+        "
+        class="text-danger">
+        This is required feild
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <div class="col-sm-6">
+        <img [src]="imgurl" style="width: 100px; height: 75px" #imgfile />
+      </div>
+      <div class="col-sm-10">
+        <input type="hidden" name="imageName" formControlName="imageName" />
+        <input
+          (change)="Imagechange($event)"
+          type="file"
+          class="form-control"
+          id="imagefile"
+          formControlName="imagefile"
+          name="imagefile"
+          #imagefile />
+      </div>
+    </div>
     <div class="col-sm-12">
       <button
         type="button"
         mat-dialog-close
         style="margin: 5px; float: right; width: 60px"
         class="btn btn-secondary btn-sm"
-        mat-button
-      >
+        mat-button>
         Cancel
       </button>
       <button
         style="margin: 5px; float: right; width: 60px"
         type="submit"
         class="btn btn-primary btn-sm"
-      >
+        [disabled]="signupform.invalid">
         Save
       </button>
     </div>

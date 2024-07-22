@@ -1,28 +1,28 @@
-import {HttpClient} from '@angular/common/http'
-import {Injectable} from '@angular/core'
-import {Observable} from 'rxjs'
-import {Posts} from '../Model/posts'
+import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { Observable } from 'rxjs'
+import { Product } from '../Model/product'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataserviceService {
-  url: string = 'https://jsonplaceholder.typicode.com'
+  url: string = 'http://localhost:5123/api/User'
   constructor(private httpclnt: HttpClient) {}
 
-  Getdata(): Observable<Posts[]> {
-    return this.httpclnt.get<Posts[]>(this.url + '/posts')
+  Getdata(): Observable<Product[]> {
+    return this.httpclnt.get<Product[]>(this.url + '/getallproduct')
   }
-  additem(itmform: Posts) {
-    return this.httpclnt.post(this.url + '/posts', itmform)
+  additem(itmform: any) {
+    return this.httpclnt.post(this.url + '/addproduct', itmform)
   }
   deleteitem(id: number) {
-    return this.httpclnt.delete(this.url + '/posts/' + id)
+    return this.httpclnt.delete(this.url + '/DeleteProduct/' + id)
   }
-  getitembyid(id: number): Observable<Posts> {
-    return this.httpclnt.get<Posts>(this.url + '/posts/' + id)
+  getitembyid(id: number): Observable<Product> {
+    return this.httpclnt.get<Product>(this.url + '/getproductbyid/' + id)
   }
-  Edititembyid(id: number, item: Posts) {
-    return this.httpclnt.put(this.url + '/posts/' + id, item)
+  Edititembyid(id: number, item: any) {
+    return this.httpclnt.put(this.url + '/EditProduct/' + id, item)
   }
 }

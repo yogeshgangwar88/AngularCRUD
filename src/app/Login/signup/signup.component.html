@@ -21,34 +21,12 @@
                 *ngIf="signupform.touched && signupform.controls.fname.hasError"
               >
                 <p
-                  *ngIf="signupform.controls.fname.hasError('required')"
-                  style="color: red"
-                >
-                  required
-                </p>
-
-                <p
-                  *ngIf="signupform.controls.fname.hasError('minlength')"
-                  style="color: red"
-                >
-                  Min length must be 4
-                </p>
-                <p
                   *ngIf="signupform.controls.fname.hasError('iserror')"
                   style="color: red"
                 >
                   abusive words exists
                 </p>
               </div>
-            </div>
-            <div class="col-md-6">
-              <label for="Number">Number</label>
-              <input
-                type="number"
-                formControlName="Number"
-                id="Number"
-                class="form-control"
-              />
             </div>
             <div class="col-md-6">
               <label for="Email">Email</label>
@@ -58,7 +36,54 @@
                 id="Email"
                 class="form-control"
               />
+              <!-- {{signupform.controls.fname.errors|json}} -->
+              <div
+                *ngIf="signupform.touched && signupform.controls.Email.hasError"
+              >
+                <p
+                  *ngIf="signupform.controls.Email.hasError('required')"
+                  style="color: red"
+                >
+                  required
+                </p>
+
+                <p
+                  *ngIf="signupform.controls.fname.hasError('minlength')"
+                  style="color: red"
+                >
+                  Min length must be 3
+                </p>
+              </div>
             </div>
+            <div class="col-md-6">
+              <label for="Password">Password</label>
+              <input
+                type="password"
+                formControlName="Password"
+                id="Password"
+                class="form-control"
+              />
+              <div
+                *ngIf="
+                  signupform.touched && signupform.controls.Password.hasError
+                "
+              >
+                <p
+                  *ngIf="signupform.controls.Password.hasError('required')"
+                  style="color: red"
+                >
+                  required
+                </p>
+
+                <p
+                  *ngIf="signupform.controls.Password.hasError('minlength')"
+                  style="color: red"
+                >
+                  Min length must be 3
+                </p>
+              </div>
+            </div>
+
             <div formGroupName="Address">
               <div class="col-md-6">
                 <label for="area">area</label>
@@ -92,8 +117,3 @@
     </div>
   </div>
 </div>
-
-<!-- <p>
-    {{signupform.value|json}}|  {{signupform.status|json}}
-    |  {{signupform.getError|json}}
-  </p> -->

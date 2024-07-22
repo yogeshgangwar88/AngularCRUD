@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core'
-import {DataserviceService} from '../../services/dataservice.service'
-import {Posts} from '../../Model/posts'
-import {ActivatedRoute, Router, RouterModule, Routes} from '@angular/router'
-import {ToastrService} from 'ngx-toastr'
+import { Component, OnInit } from '@angular/core'
+import { DataserviceService } from '../../services/dataservice.service'
+import { ActivatedRoute, Router, RouterModule, Routes } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
+import { Product } from '../../Model/product'
+import { NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-itemdetail',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, NgIf],
   templateUrl: './itemdetail.component.html',
   styleUrl: './itemdetail.component.scss',
 })
@@ -21,33 +22,37 @@ export class ItemdetailComponent implements OnInit {
   itemid: any
   constructor(
     private dataser: DataserviceService,
-    private routes: ActivatedRoute,
+    private ActivatedRoute: ActivatedRoute,
     private toastr: ToastrService,
-    private routesx: Router
-  ) {}
+    private Router: Router
+  ) {
+    this.itemdetails = {} as Product
+  }
 
-  itemdetails!: Posts
+  itemdetails!: Product
   ngOnInit(): void {
     //get param value from url
-    this.itemid = this.routes.snapshot.paramMap.get('id')
+    this.itemid = this.ActivatedRoute.snapshot.paramMap.get('id')
     this.dataser.getitembyid(this.itemid).subscribe({
       next: (v) => {
         this.itemdetails = v
-        console.log(this.itemdetails)
       },
-      error: (e) => {},
+      error: (e) => {
+        console.log(e)
+      },
       complete: () => {},
     })
   }
   delete() {
     this.dataser.deleteitem(this.itemid).subscribe({
       next: (v) => {
-        // console.log(v)
         this.toastr.success('Item deleted successfully')
       },
-      error: (e) => console.log(this.itemid),
+      error: (e) => {
+        console.log(e)
+      },
       complete: () => {
-        this.routesx.navigate(['/home'])
+        this.Router.navigate(['/home'])
       },
     })
   }

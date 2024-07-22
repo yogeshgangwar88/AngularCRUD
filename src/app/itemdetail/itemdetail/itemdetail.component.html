@@ -4,13 +4,21 @@
     <div class="card" style="width: 18rem">
       <img
         class="card-img-top"
-        src="https://picsum.photos/140/140?random={{ itemid }}"
-        alt="Card image cap"
-      />
+        *ngIf="itemdetails.imageName != null; else defaultimg"
+        style="width: 140px; height: 140px"
+        src="http://localhost:5123/staticImages/{{ itemdetails.imageName }}"
+        alt="No Imgae " />
+      <ng-template #defaultimg>
+        <img
+          class="card-img-top"
+          src="https://picsum.photos/140/140?random={{ itemdetails.id }}"
+          alt="No Imgae " />
+      </ng-template>
+
       <div class="card-body">
-        <h5 class="card-title">{{ itemdetails.title }}</h5>
+        <h5 class="card-title">{{ itemdetails.productName }}</h5>
         <p class="card-text">
-          {{ itemdetails.body }}
+          {{ itemdetails.description }}
         </p>
       </div>
       <ul class="list-group list-group-flush">
@@ -28,8 +36,7 @@
         <button
           style="margin: 5px"
           class="btn btn-danger"
-          (click)="openDialog()"
-        >
+          (click)="openDialog()">
           Delete
         </button>
       </div>

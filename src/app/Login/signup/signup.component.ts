@@ -1,6 +1,6 @@
-import {CommonModule, JsonPipe} from '@angular/common'
-import {HttpClient} from '@angular/common/http'
-import {Component} from '@angular/core'
+import { CommonModule, JsonPipe } from '@angular/common'
+import { HttpClient } from '@angular/common/http'
+import { Component } from '@angular/core'
 import {
   AbstractControl,
   FormControl,
@@ -9,6 +9,8 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms'
+import { Router } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-signup',
@@ -18,40 +20,45 @@ import {
   styleUrl: './signup.component.scss',
 })
 export class SignupComponent {
-  constructor(private srvc: HttpClient) {
+  baseurl: string = 'http://localhost:5123/api/User'
+  constructor(
+    private srvc: HttpClient,
+    private toastr: ToastrService,
+    private router: Router
+  ) {
     //
   }
   signupform = new FormGroup({
-    fname: new FormControl('', [
+    fname: new FormControl('', [this.CustomValidatorfn]),
+    Email: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    Number: new FormControl(''),
+    Password: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
-      this.CustomValidatorfn,
     ]),
-    Email: new FormControl('', Validators.required),
-    Number: new FormControl('', Validators.required),
-    Password: new FormControl('', Validators.required),
     Address: new FormGroup({
-      Aria: new FormControl('', Validators.minLength(5)),
-      Pin: new FormControl('', Validators.minLength(3)),
+      Aria: new FormControl(''),
+      Pin: new FormControl(''),
     }),
   })
 
   onSubmit() {
     console.log(this.signupform)
     let obj = {
-      name: this.signupform.controls.fname.value,
       email: this.signupform.controls.Email.value,
-      number: this.signupform.controls.Number.value,
+      password: this.signupform.controls.Password.value,
     }
-    this.srvc.post('http://localhost:3000/usersb', obj).subscribe({
-      next(value) {
-        console.log('Observable emitted the next value: ' + value)
+    this.srvc.post(this.baseurl + '/Adduser', obj).subscribe({
+      next: (value) => {
+        this.toastr.success('User Added')
+        this.router.navigate(['/login'])
       },
-      error(err) {
-        console.error('Observable emitted an error: ' + err)
+      error: (err) => {
+        console.log(err)
+        this.toastr.error('something went wrong')
       },
       complete() {
-        console.log('Observable emitted the complete notification')
+        // console.log('Observable emitted the complete notification')
       },
     })
   }
@@ -66,7 +73,7 @@ export class SignupComponent {
       }
     }
     if (iserror) {
-      return {iserror: true}
+      return { iserror: true }
     } else {
       return null
     }
