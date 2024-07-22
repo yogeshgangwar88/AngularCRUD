@@ -140,7 +140,9 @@ export class UserhomeComponent implements OnInit {
           ? 'http://localhost:5123/staticImages/' + v.imageName
           : 'assets/usrimg.png'
       },
-      error: (e) => {},
+      error: (e) => {
+        console.log(e)
+      },
       complete: () => {
         this.getalldata()
       },
@@ -155,7 +157,9 @@ export class UserhomeComponent implements OnInit {
           //console.log(v)
           this.toastr.success('Item deleted successfully')
         },
-        error: (e) => console.log(e),
+        error: (e) => {
+          console.log(e)
+        },
         complete: () => {
           this.getalldata()
         },

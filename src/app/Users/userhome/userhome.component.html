@@ -99,7 +99,26 @@
             type="text"
             placeholder="title"
             formControlName="productName"
-            class="form-control" />
+            class="form-control"
+            #productName />
+        </div>
+        <div
+          *ngIf="
+            itmform.dirty &&
+            itmform.touched &&
+            itmform.controls.productName.hasError('required')
+          "
+          class="text-danger">
+          Product Name is require
+        </div>
+        <div
+          *ngIf="
+            itmform.dirty &&
+            itmform.touched &&
+            itmform.controls.productName.hasError('minlength')
+          "
+          class="text-danger">
+          productName minlength is 3
         </div>
         <div class="col-md-6 mt4" style="margin-top: 10px">
           <input
@@ -108,12 +127,39 @@
             formControlName="description"
             class="form-control" />
         </div>
+        <div
+          *ngIf="
+            itmform.dirty &&
+            itmform.touched &&
+            itmform.controls.description.hasError('required')
+          "
+          class="text-danger">
+          Description is require
+        </div>
+        <div
+          *ngIf="
+            itmform.dirty &&
+            itmform.touched &&
+            itmform.controls.description.hasError('minlength')
+          "
+          class="text-danger">
+          Description minlength is 3
+        </div>
         <div class="col-md-6 mt4" style="margin-top: 10px">
           <input
             type="number"
             placeholder="price"
             formControlName="price"
             class="form-control" />
+        </div>
+        <div
+          *ngIf="
+            itmform.dirty &&
+            itmform.touched &&
+            itmform.controls.description.hasError('price')
+          "
+          class="text-danger">
+          price is require
         </div>
       </div>
     </form>

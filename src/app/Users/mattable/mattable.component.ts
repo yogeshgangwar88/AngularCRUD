@@ -8,6 +8,9 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatDialog } from '@angular/material/dialog'
 import { MatConfirmboxComponent } from '../../customcomponents/mat-confirmbox/mat-confirmbox.component'
 import { Product } from '../../Model/product'
+import { CurrencyPipe, NgIf } from '@angular/common'
+import { pipe } from 'rxjs'
+
 @Component({
   selector: 'app-mattable',
   standalone: true,
@@ -17,6 +20,8 @@ import { Product } from '../../Model/product'
     MatSortModule,
     MatCardModule,
     MatButtonModule,
+    NgIf,
+    CurrencyPipe,
   ],
   templateUrl: './mattable.component.html',
   styleUrl: './mattable.component.scss',
@@ -24,7 +29,7 @@ import { Product } from '../../Model/product'
 export class MattableComponent implements OnInit {
   Postlist!: Product[]
   datasource: any
-  displaycolumns: string[] = ['title', 'body', 'image', 'action']
+  displaycolumns: string[] = ['title', 'body', 'price', 'image', 'action']
   @ViewChild(MatPaginator) paginator!: MatPaginator
   readonly dialog = inject(MatDialog)
   constructor(
@@ -33,8 +38,8 @@ export class MattableComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.dataservice.Getdata().subscribe({
-      next: (v) => {
-        this.Postlist = v
+      next: (v: any) => {
+        this.Postlist = v.dataList
         this.datasource = new MatTableDataSource<Product>(this.Postlist)
         this.datasource.paginator = this.paginator
       },
@@ -47,7 +52,14 @@ export class MattableComponent implements OnInit {
 
   openDialogedit(id: number): void {
     this._matmodal.data.itemid = id
-    this._matmodal.openModal('editform', '', id)
+    this._matmodal
+      .openModal('editform', '', id)
+      .afterClosed()
+      .subscribe((res) => {
+        if (res != undefined && res.success) {
+          this.ngOnInit()
+        }
+      })
   }
   opendialogdelete(id: number) {
     this._matmodal
@@ -58,6 +70,7 @@ export class MattableComponent implements OnInit {
           this.dataservice.deleteitem(id).subscribe({
             next: (v) => {
               this._matmodal.openModal('success', 'Item deleted successfully')
+              this.ngOnInit()
             },
             error(err) {
               console.log(err)

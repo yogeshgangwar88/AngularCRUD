@@ -3,11 +3,12 @@ import { DataserviceService } from '../../services/dataservice.service'
 import { ActivatedRoute, Router, RouterModule, Routes } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { Product } from '../../Model/product'
+import { NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-itemdetail',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, NgIf],
   templateUrl: './itemdetail.component.html',
   styleUrl: './itemdetail.component.scss',
 })
@@ -24,7 +25,9 @@ export class ItemdetailComponent implements OnInit {
     private ActivatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private Router: Router
-  ) {}
+  ) {
+    this.itemdetails = {} as Product
+  }
 
   itemdetails!: Product
   ngOnInit(): void {
@@ -33,19 +36,21 @@ export class ItemdetailComponent implements OnInit {
     this.dataser.getitembyid(this.itemid).subscribe({
       next: (v) => {
         this.itemdetails = v
-        //console.log(this.itemdetails)
       },
-      error: (e) => {},
+      error: (e) => {
+        console.log(e)
+      },
       complete: () => {},
     })
   }
   delete() {
     this.dataser.deleteitem(this.itemid).subscribe({
       next: (v) => {
-        // console.log(v)
         this.toastr.success('Item deleted successfully')
       },
-      error: (e) => console.log(this.itemid),
+      error: (e) => {
+        console.log(e)
+      },
       complete: () => {
         this.Router.navigate(['/home'])
       },
