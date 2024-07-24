@@ -1,11 +1,11 @@
-import {Routes} from '@angular/router'
+import { Routes } from '@angular/router'
 
-import {UserhomeComponent} from './Users/userhome/userhome.component'
-import {authGuard} from './gaurd/auth.guard'
-import {ItemdetailComponent} from './itemdetail/itemdetail/itemdetail.component'
+import { UserhomeComponent } from './Users/userhome/userhome.component'
+import { authGuard } from './gaurd/auth.guard'
+import { ItemdetailComponent } from './itemdetail/itemdetail/itemdetail.component'
 
 export const routes: Routes = [
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   ////lazy loading
   {
@@ -20,7 +20,12 @@ export const routes: Routes = [
       import('./Login/signup/signup.component').then((m) => m.SignupComponent),
   },
   /// normal loading component with gaurd
-  {path: 'home', component: UserhomeComponent, canActivate: [authGuard]},
+  { path: 'home', component: UserhomeComponent, canActivate: [authGuard] },
+  {
+    path: 'home/bootstrap',
+    component: UserhomeComponent,
+    canActivate: [authGuard],
+  },
   {
     path: 'home/itemdetails/:id',
     component: ItemdetailComponent,
@@ -34,5 +39,5 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
-  {path: '**', redirectTo: '/'},
+  { path: '**', redirectTo: '/' },
 ]

@@ -26,7 +26,7 @@
           <img
             *ngIf="element.imageName != null; else defaultimg"
             style="width: 140px; height: 140px"
-            src="http://localhost:5123/staticImages/{{ element.imageName }}"
+            src="http://localhost:8181/staticImages/{{ element.imageName }}"
             alt="No Imgae " />
           <ng-template #defaultimg>
             <img

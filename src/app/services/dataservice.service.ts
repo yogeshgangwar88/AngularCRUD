@@ -7,7 +7,7 @@ import { Product } from '../Model/product'
   providedIn: 'root',
 })
 export class DataserviceService {
-  url: string = 'http://localhost:5123/api/User'
+  url: string = 'http://localhost:8181/api/User'
   constructor(private httpclnt: HttpClient) {}
 
   Getdata(): Observable<Product[]> {

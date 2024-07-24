@@ -41,7 +41,7 @@ export class MaterialformsComponent implements OnInit {
           this.imgfile.nativeElement.src = '/assets/usrimg.png'
         } else
           this.imgfile.nativeElement.src =
-            'http://localhost:5123/staticImages/' + v.imageName
+            'http://localhost:8181/staticImages/' + v.imageName
       },
       error(err) {},
       complete() {},
