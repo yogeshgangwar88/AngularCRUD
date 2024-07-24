@@ -1,6 +1,7 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core'
 import { CurrencyPipe, JsonPipe, NgIf } from '@angular/common'
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -13,6 +14,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { RouterModule } from '@angular/router'
 import { CustomedirectiveDirective } from '../../Directive/customedirective.directive'
 import { Product } from '../../Model/product'
+import { isNumber } from '@ng-bootstrap/ng-bootstrap/util/util'
 
 @Component({
   selector: 'app-userhome',
@@ -58,7 +60,7 @@ export class UserhomeComponent implements OnInit {
       Validators.required,
       Validators.minLength(3),
     ]),
-    price: new FormControl('0', [Validators.required]),
+    price: new FormControl('0', [Validators.required, Validators.min(0)]),
   })
 
   openmodal(actiontype: string, content: any): void {
@@ -97,7 +99,7 @@ export class UserhomeComponent implements OnInit {
     formdata.append('id', _id.toString())
     formdata.append('productName', formvalue.value.productName)
     formdata.append('description', formvalue.value.description)
-    formdata.append('price', formvalue.value.price.toString())
+    formdata.append('price', formvalue.value.price?.toString())
     if (this.editmode) {
       this.dataservice.Edititembyid(_id, formdata).subscribe({
         next: (v) => {
@@ -105,7 +107,11 @@ export class UserhomeComponent implements OnInit {
           this.toastr.success('Edited item success')
           this.getalldata()
         },
-        error: (e) => console.error(e),
+        error: (e) => {
+          console.error(e)
+          //this.modelref.close()
+          this.toastr.error('Something went wrong')
+        },
         complete: () => console.info('complete'),
       })
     } else {
@@ -134,10 +140,13 @@ export class UserhomeComponent implements OnInit {
             Validators.required,
             Validators.minLength(3),
           ]),
-          price: new FormControl(v.price.toLocaleString()),
+          price: new FormControl(v.price.toLocaleString(), [
+            Validators.required,
+            this.customerrorfn,
+          ]),
         })
         this.imgurl = v.imageName
-          ? 'http://localhost:5123/staticImages/' + v.imageName
+          ? 'http://localhost:8181/staticImages/' + v.imageName
           : 'assets/usrimg.png'
       },
       error: (e) => {
@@ -179,6 +188,11 @@ export class UserhomeComponent implements OnInit {
     filereader.onload = (event: any) => {
       this.imgurl = event.target.result
     }
+  }
+  customerrorfn(ele: AbstractControl) {
+    if (isNaN(ele.value) || ele.value < 0) {
+      return { istext: true }
+    } else return null
   }
 }
 

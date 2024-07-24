@@ -28,7 +28,7 @@
             <ng-container *ngIf="item.imageName; else defaultimg">
               <img
                 style="width: 140px; height: 140px"
-                src="http://localhost:5123/staticImages/{{ item.imageName }}"
+                src="http://localhost:8181/staticImages/{{ item.imageName }}"
                 alt="No Imgae " />
             </ng-container>
             <ng-template #defaultimg>
@@ -147,7 +147,7 @@
         </div>
         <div class="col-md-6 mt4" style="margin-top: 10px">
           <input
-            type="number"
+            type="text"
             placeholder="price"
             formControlName="price"
             class="form-control" />
@@ -156,10 +156,19 @@
           *ngIf="
             itmform.dirty &&
             itmform.touched &&
-            itmform.controls.description.hasError('price')
+            itmform.controls.price.hasError('required')
           "
           class="text-danger">
           price is require
+        </div>
+        <div
+          *ngIf="
+            itmform.dirty &&
+            itmform.touched &&
+            itmform.controls.price.hasError('istext')
+          "
+          class="text-danger">
+          price is invalid
         </div>
       </div>
     </form>
